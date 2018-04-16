@@ -333,14 +333,34 @@ TARGET_LINK_LIBRARIES(ATen cpuinfo)
 
 IF(CUDA_FOUND)
   IF ($ENV{ATEN_STATIC_CUDA})
+    # CuFFT has a complicated static story (especially around CUDA < 9) because it has device callback support
+    # we first have to build a fake lib that links with no device callbacks,
+    # and then we link against this object file.
+    # This was recommended by the CuFFT team at NVIDIA
+
+    # build fake CuFFT lib in build dir
+    EXECUTE_PROCESS(COMMAND touch ${CMAKE_CURRENT_BINARY_DIR}/empty_file.cc)
+    ADD_CUSTOM_COMMAND(
+      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/cufft_static_library.a
+      COMMAND "${CUDA_TOOLKIT_ROOT_DIR}/bin/nvcc" -o ${CMAKE_CURRENT_BINARY_DIR}/cufft_static_library.a -Xcompiler -fPIC
+      --generate-code arch=compute_30,code=sm_30
+      --generate-code arch=compute_35,code=sm_35
+      --generate-code arch=compute_50,code=sm_50
+      --generate-code arch=compute_60,code=sm_60
+      --device-link ${CMAKE_CURRENT_BINARY_DIR}/empty_file.cc -lcufft_static -lculibos
+      )
+    ADD_CUSTOM_TARGET(FAKELINKED_CUFFT_TARGET DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/cufft_static_library.a)
+    add_library(FAKELINKED_CUFFT STATIC IMPORTED GLOBAL)
+    add_dependencies(FAKELINKED_CUFFT FAKELINKED_CUFFT_TARGET)
+    set_target_properties(FAKELINKED_CUFFT PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/cufft_static_library.a)
+
     TARGET_LINK_LIBRARIES(ATen
       ${CUDA_LIBRARIES}
       ${CUDA_TOOLKIT_ROOT_DIR}/lib64/libcusparse_static.a
       ${CUDA_TOOLKIT_ROOT_DIR}/lib64/libcurand_static.a
       ${CUDA_TOOLKIT_ROOT_DIR}/lib64/libcublas_static.a
-      ${CUFFT_STATIC_LIB}
+      FAKELINKED_CUFFT
       )
-    CUDA_ADD_CUFFT_TO_TARGET(ATen)
   ELSE()
     TARGET_LINK_LIBRARIES(ATen
       ${CUDA_LIBRARIES}
