@@ -14,6 +14,7 @@
 #include "torch/csrc/jit/passes/peephole.h"
 #include "torch/csrc/jit/passes/shape_analysis.h"
 #include "torch/csrc/jit/passes/remove_expands.h"
+#include "torch/csrc/jit/passes/loop_unrolling.h"
 
 #include "torch/csrc/autograd/edge.h"
 #include "torch/csrc/autograd/function.h"
@@ -324,6 +325,7 @@ private:
       // it works fine on variables.
       BatchMM(graph);
       FuseGraph(graph);
+      UnrollLoops(graph);
     }
   }
   // we need to run some passes to ensure the graph will run correctly
