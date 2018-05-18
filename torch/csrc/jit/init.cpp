@@ -75,7 +75,7 @@ void initJITBindings(PyObject *module) {
      auto tensor_inputs = createVariableTensorList(inputs);
      PropagateInputShapes(graph, ArgumentSpec(with_grad, tensor_inputs));
    })
-   .def("_jit_pass_unroll_loops", UnrollLoops)
+   .def("_jit_pass_loop_unrolling", UnrollLoops)
    .def("_jit_run_cpp_tests", runJITCPPTests)
    .def("_jit_flatten", [](py::handle& obj) {
      auto res =  python::flatten(obj);
