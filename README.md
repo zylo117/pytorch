@@ -5,6 +5,7 @@ Please follow this instruction to build your own PyTorch-GPU-MACOSX.
 
 https://github.com/zylo117/pytorch/tree/master/HOW-TO-BUILD
 
+or simply download newest *.whl file from https://github.com/zylo117/pytorch/releases, using "pip install *.whl"
 
 
 
