@@ -12,15 +12,15 @@ REQUIRED_PACKAGES = [
     'numpy >= 1.14.0',
 ]
 
-# setup(
-#     name='pytorch-gpu-macosx',
-#     version='0.5.0',
-#     description='Unoffcial NVIDIA CUDA GPU support version of PyTorch for MAC OSX 10.13',
-#     author='Carl Cheung',
-#     author_email='zylo117@hotmail.com',
-#     url='https://github.com/zylo117/pytorch',
-#     install_requires=REQUIRED_PACKAGES,
-#     keywords='gpu cuda torch tensor machine learning', )
+setup(
+    name='pytorch-gpu-macosx',
+    version='0.5.0',
+    description='Unoffcial NVIDIA CUDA GPU support version of PyTorch for MAC OSX 10.13',
+    author='Carl Cheung',
+    author_email='zylo117@hotmail.com',
+    url='https://github.com/zylo117/pytorch',
+    install_requires=REQUIRED_PACKAGES,
+    keywords='gpu cuda torch tensor machine learning', )
 
 
 pytorch_src_path = '../'
