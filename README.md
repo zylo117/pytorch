@@ -5,7 +5,6 @@ Please follow this instruction to build your own PyTorch-GPU-MACOSX.
 
 https://github.com/zylo117/pytorch/tree/master/HOW-TO-BUILD
 
-or auto download and compile using "pip install pytorch-gpu-macosx", but I don't recommend it.
 
 
 
