@@ -1,3 +1,14 @@
+# Please notice, this repository is only a minor bug fix
+# on building MAC OSX with NVIDIA CUDA GPU supports.
+
+Please follow this instruction to build your own PyTorch-GPU-MACOSX.
+
+https://github.com/zylo117/pytorch/tree/master/HOW-TO-BUILD
+
+or auto download and compile using "pip install pytorch-gpu-macosx", but I don't recommend it.
+
+
+
 <p align="center"><img width="40%" src="docs/source/_static/img/pytorch-logo-dark.png" /></p>
 
 --------------------------------------------------------------------------------

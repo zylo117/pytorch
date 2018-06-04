@@ -162,6 +162,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+if(APPLE)
+  set(CMAKE_FIND_FRAMEWORK LAST)
+  set(CMAKE_FIND_APPBUNDLE LAST)
+endif()
+
 enable_testing()
 
 # ---[ Build variables set within the cmake tree
